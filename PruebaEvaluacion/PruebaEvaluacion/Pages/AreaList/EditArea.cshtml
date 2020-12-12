@@ -1,0 +1,40 @@
+﻿@page
+@model PruebaEvaluacion.Pages.AreaList.EditAreaModel
+
+<br />
+<h2 class="text-info">Editar Area</h2>
+<h4 class="text-info">Proceso actualizar funciona, no se porque no se muestran los datos a no ser que se ponga un breakpoint y se revise el objeto obtenido</h4>
+<br />
+
+<div class="border container" style="padding:30px">
+    @*Es el mismo formulario que al crear un area nueva
+        el form contiene un row por cada atributo de la clase a registrar*@
+    <form method="post">
+        <input type="hidden" asp-for="idArea" />
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="area.Nombre"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="area.Nombre" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="area.Descripcion"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="area.Descripcion" class="form-control" />
+            </div>
+        </div>
+        @*boton encargado de actualizar el objeto y de volver a la lista en caso que no se desee modificar*@
+        <div class="form-group row">
+            <div class="col-3 offset-4">
+                <input type="submit" value="Actualizar" class="btn btn-primary form-control" />
+            </div>
+            <div class="col-3">
+                <a asp-page="Index" class="btn btn-success form-control">Volver a la lista</a>
+            </div>
+        </div>
+    </form>
+</div>

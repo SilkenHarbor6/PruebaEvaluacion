@@ -1,0 +1,103 @@
+﻿@page
+@model PruebaEvaluacion.Pages.EmployeeList.IndexModel
+
+<br />
+<div class="container row p-0 m-0">
+    <div class="col-9">
+        <h2 class="text-info">Lista de empleados</h2>
+    </div>
+    @*Boton para registrar un empleado nuevo, te redirige a la pagina de registro de empleados*@
+    <div class="col-3">
+        <a asp-page="CreateEmployee" class="btn btn-info form-control text-white">Registrar nuevo Empleado</a>
+    </div>
+    @*formulario para obtener el indice del area seleccionada y realizar el filtro*@
+    <form method="post">
+        <div class="form-inline">
+            <select class="custom-select mr-2" asp-for="SelectedArea" asp-items="@(new SelectList(Model.Areas,"IdArea","Nombre"))"> </select>
+            <button type="submit" asp-page-handler="FilterList" class="btn btn-primary mr-2">Filtrar</button>
+            <button type="submit" asp-page-handler="CleanFilter" class="btn btn-danger mr-2">Limpiar</button>
+        </div>
+    </form>
+    <div class="col-12 border p-3 mt-3">
+        <form method="post">
+            @*Se valida que la lista no este vacia*@
+            @if (Model.ActualEmployees.Count() > 0)
+            {
+                @*si no esta vacia se genera la tabla con sus header*@
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+                        <th>
+                            <label asp-for="ActualEmployees.FirstOrDefault().NombreCompleto"></label>
+                        </th>
+                        <th>
+                            <label asp-for="ActualEmployees.FirstOrDefault().Cedula"></label>
+                        </th>
+                        <th>
+                            <label asp-for="ActualEmployees.FirstOrDefault().Correo"></label>
+                        </th>
+                        <th>
+                            <label>Edad</label>
+                        </th>
+                        <th>
+                            <label># Años contratado</label>
+                        </th>
+                        <th>
+                            <label>Jefe</label>
+                        </th>
+                        <th>
+                            <label>Area</label>
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                    @*Y para cada objeto en la lista, se inserta una row nueva en la tabla con la info*@
+                    @foreach (var item in Model.ActualEmployees)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.NombreCompleto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Cedula)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Correo)
+                            </td>
+                            <td>
+                                @{
+                                    int edad = item.CalcularRango((DateTime)item.FechaNacimiento);
+                                }
+                                @Html.DisplayFor(m => edad)
+                            </td>
+                            <td>
+                                @{
+                                    int Contratacion = item.CalcularRango((DateTime)item.FechaIngreso);
+                                }
+                                @Html.DisplayFor(m => Contratacion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.IdJefeNavigation.NombreCompleto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.IdAreaNavigation.Nombre)
+                            </td>
+                            @*Se definen los botones para eliminar y editar*@
+                            <td>
+                                @*Si se desea eliminar, se genera una alerta de confirmacion, de ser aceptado, se elimina el registro con el handler Delete y se pasa el id del elemento por url*@
+                                <button asp-page-handler="Delete" asp-route-id="@item.IdEmpleado" onclick="return confirm('¿Desea eliminar al empleado?')" class="btn btn-danger btn-sm">Eliminar</button>
+                                @*Si se desea editar, se es redirigido a la pagina de edicion y se pasa el id del objeto por la url*@
+                                <a asp-page="EditEmployee" asp-route-id="@item.IdEmpleado" class="btn btn-success btn-sm text-white">Editar</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                @*En caso que no hayan empleados, se muestra este texto*@
+                <p>No hay empleados registrados</p>
+            }
+        </form>
+    </div>
+</div>

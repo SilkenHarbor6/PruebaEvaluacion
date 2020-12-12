@@ -1,0 +1,83 @@
+﻿@page
+@model PruebaEvaluacion.Pages.EmployeeList.EditEmployeeModel
+
+
+<br />
+<h2 class="text-info">Editar empleado</h2>
+<br />
+
+
+<div class="border container" style="padding:30px">
+    @*Es el mismo formulario que al crear un area nueva
+        el form contiene un row por cada atributo de la clase a registrar*@
+    <form method="post">
+        <input type="hidden" asp-for="Employee.IdEmpleado" />
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Employee.NombreCompleto"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Employee.NombreCompleto" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Employee.Cedula"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Employee.Cedula" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Employee.Correo"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Employee.Correo" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Employee.FechaNacimiento"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Employee.FechaNacimiento" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Employee.FechaIngreso"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Employee.FechaIngreso" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Employee.IdEmpleado"></label>
+            </div>
+            <div class="col-6">
+                <select asp-for="SelectedBoss" asp-items="@(new SelectList(Model.Employees,"IdEmpleado","NombreCompleto"))" class="custom-select">
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="Employee.IdArea"></label>
+            </div>
+            <div class="col-6">
+                <select asp-for="SelectedArea" asp-items="@(new SelectList(Model.Areas,"IdArea","Nombre"))" class="custom-select">
+                </select>
+            </div>
+        </div>
+        @*boton encargado de actualizar el objeto y de volver a la lista en caso que no se desee modificar*@
+        <div class="form-group row">
+            <div class="col-3 offset-4">
+                <input type="submit" value="Actualizar" class="btn btn-primary form-control" />
+            </div>
+            <div class="col-3">
+                <a asp-page="Index" class="btn btn-success form-control">Volver a la lista</a>
+            </div>
+        </div>
+    </form>
+</div>

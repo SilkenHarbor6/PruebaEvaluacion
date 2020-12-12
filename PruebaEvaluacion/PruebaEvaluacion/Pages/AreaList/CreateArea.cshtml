@@ -1,0 +1,43 @@
+﻿@page
+@model PruebaEvaluacion.Pages.AreaList.CreateAreaModel
+
+<br />
+<h2 class="text-info">Registrar Area</h2>
+<br />
+
+<div class="border container" style="padding:30px">
+    @*Formulario con los datos del empleado, es una row por cada dato*@
+    <form method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="oArea.Nombre"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="oArea.Nombre" class="form-control" />
+            </div>
+            <span asp-validation-for="oArea.Nombre" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="oArea.Descripcion"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="oArea.Descripcion" class="form-control" />
+            </div>
+            <span asp-validation-for="oArea.Descripcion" class="text-danger"></span>
+        </div>
+        @*Botones para finalizar acciones, el primero guarda el registro en la db*@
+        <div class="form-group row">
+            <div class="col-3 offset-4">
+                <input type="submit" value="Registrar" class="btn btn-primary form-control" />
+            </div>
+            <div class="col-3">
+                <a asp-page="Index" class="btn btn-success form-control">Volver a la lista</a>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
